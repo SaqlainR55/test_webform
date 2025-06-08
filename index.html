@@ -2,88 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>F3 Marina Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>F3 Marina Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-    }
-
-    .tabs {
-      display: flex;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto 20px;
-    }
-
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    .tabs { display: flex; max-width: 800px; margin: auto; }
     .tab {
-      flex: 1;
-      padding: 12px;
-      text-align: center;
-      background: #ccc;
-      cursor: pointer;
+      flex: 1; padding: 12px; text-align: center;
+      background: #ccc; cursor: pointer;
     }
-
     .tab.active {
-      background: linear-gradient(to right, #333, #888);
-      color: white;
-      font-weight: bold;
+      background: linear-gradient(to right, #333, #888); color: white; font-weight: bold;
     }
-
     form {
-      background: white;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-      display: none;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white; padding: 20px; max-width: 800px;
+      margin: auto; display: none; box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    form.active {
-      display: block;
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .row > input,
-    .row > textarea {
-      flex: 1;
-    }
-
+    form.active { display: block; }
+    .row { display: flex; gap: 10px; margin-bottom: 15px; }
+    .row > input, .row > textarea { flex: 1; }
     input, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
+      width: 100%; padding: 10px; border: 1px solid #ccc;
+      border-radius: 4px; box-sizing: border-box;
     }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-
     .submit-btn {
       background: linear-gradient(to right, #c0392b, #e74c3c);
-      border: none;
-      color: white;
-      padding: 12px 24px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-top: 15px;
+      border: none; color: white; padding: 12px 24px;
+      font-size: 14px; cursor: pointer; border-radius: 4px;
     }
-
-    .checkbox-row {
-      margin-top: 10px;
-    }
+    .checkbox-row { margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -94,7 +41,8 @@
   </div>
 
   <!-- General Info -->
-  <form id="general" class="active">
+  <form id="general" method="POST" action="https://script.google.com/macros/s/AKfycbyekzg30pnFcWX7oRzDmOX2bpu5n_f0Y9W9AVpASsVDpIOBsIuq2eIVGayg3IAySY16/exec" target="submission-frame">
+
     <div class="row">
       <input name="name" placeholder="Name (Required)" required />
       <input name="phone" placeholder="Phone" />
@@ -116,7 +64,8 @@
   </form>
 
   <!-- Dry Storage -->
-  <form id="dry">
+  <form id="dry" method="POST" action="https://script.google.com/macros/s/AKfycbyekzg30pnFcWX7oRzDmOX2bpu5n_f0Y9W9AVpASsVDpIOBsIuq2eIVGayg3IAySY16/exec" target="submission-frame">
+
     <div class="row">
       <input name="firstName" placeholder="First (Required)" required />
       <input name="lastName" placeholder="Last" />
@@ -149,41 +98,15 @@
     <button class="submit-btn">SUBMIT</button>
   </form>
 
+  <iframe name="submission-frame" style="display:none;"></iframe>
+
   <script>
-    const forms = document.querySelectorAll("form");
-    const tabs = document.querySelectorAll(".tab");
-    const endpoint = "https://script.google.com/macros/s/AKfycbxD_dY80r67vpWWAhh6Xck1DYyDnYrPpSm1szNvQ7x7CJgQc4meY2wy5rHMKZmY-_Ogdw/exec";
-
     function showForm(id) {
-      forms.forEach(f => f.classList.remove("active"));
+      document.querySelectorAll("form").forEach(f => f.classList.remove("active"));
       document.getElementById(id).classList.add("active");
-
-      tabs.forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
       document.querySelector(`.tab[onclick="showForm('${id}')"]`).classList.add("active");
     }
-
-    forms.forEach(form => {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(form).entries());
-        try {
-          const res = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-          });
-          if (res.ok) {
-            alert("✅ Submitted successfully!");
-            form.reset();
-          } else {
-            alert("❌ Submission failed.");
-          }
-        } catch (err) {
-          alert("⚠️ Network error.");
-          console.error(err);
-        }
-      });
-    });
   </script>
 
 </body>
